@@ -169,7 +169,7 @@ public class Users implements Serializable {
 
     @Override
     public String toString() {
-        return "users.Users[ id=" + id + " ]";
+        return "test.Users[ id=" + id + " ]";
     }
     
 }
