@@ -33,13 +33,11 @@
                             <h:outputText value="#{item.date}">
                                 <f:convertDateTime pattern="MM/dd/yyyy" />
                             </h:outputText>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{expBundle.ListOperationsTitle_amount}"/>
+                            <f:facet name="footer">
+                                <h:outputLabel value="TOTAL" style="font-size: 12pt"/>
                             </f:facet>
-                            <h:outputText value="#{item.amount}"/>
                         </p:column>
+                        
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="#{expBundle.ListOperationsTitle_userId}"/>
@@ -52,21 +50,23 @@
                             </f:facet>
                             <h:outputText value="#{item.categoryId.categoryName}"/>
                         </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{expBundle.ListOperationsTitle_amount}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.amount}"/>
+                            <f:facet name="footer">
+                                <h:outputLabel value="#{report.dbData()}"  style="font-size: 12pt"/>
+                            </f:facet>                             
+                        </p:column>
                         <f:facet name="footer">
-                           
-                                <h:outputLabel value="TOTAL"/>
-                                <h:outputLabel value="#{report.dbData()}" /><br/>
-                              
-                                <p:button id="backButton" value="Back to Expense Management" outcome="/operations/List.xhtml"/>
-                                <p:commandButton id="logoutButton" value="Logout" action="#{logout.reset()}"/>
-                                
+                            <p:button id="backButton" value="Back to Expense Management" outcome="/operations/List.xhtml"/>
+                            <p:commandButton id="logoutButton" value="Logout" action="#{logout.reset()}"/>
                         </f:facet>
                     </p:dataTable>
-                </p:panel>
+                </p:panel>            
                 
-                
-            </h:form>
-            
+            </h:form>          
             
         </ui:define>
     </ui:composition>
