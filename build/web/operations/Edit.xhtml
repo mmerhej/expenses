@@ -3,38 +3,41 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
 
-    <ui:composition template="/template.xhtml">
-        <ui:define name="title">
-            <h:outputText value="#{opBundle.EditOperationsTitle}"></h:outputText>
-        </ui:define>
-        <ui:define name="body">
-            <h:panelGroup id="messagePanel" layout="block">
-                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
-            </h:panelGroup>
-            <h:form>
-                <h:panelGrid columns="2">
-                    <h:outputLabel value="#{opBundle.EditOperationsLabel_id}" for="id" />
-                    <h:inputText id="id" value="#{operationsController.selected.id}" title="#{opBundle.EditOperationsTitle_id}" required="true" requiredMessage="#{opBundle.EditOperationsRequiredMessage_id}"/>
-                    <h:outputLabel value="#{opBundle.EditOperationsLabel_date}" for="date" />
-                    <h:inputText id="date" value="#{operationsController.selected.date}" title="#{opBundle.EditOperationsTitle_date}" required="true" requiredMessage="#{opBundle.EditOperationsRequiredMessage_date}">
-                        <f:convertDateTime pattern="MM/dd/yyyy" />
-                    </h:inputText>
-                    <h:outputLabel value="#{opBundle.EditOperationsLabel_amount}" for="amount" />
-                    <h:inputText id="amount" value="#{operationsController.selected.amount}" title="#{opBundle.EditOperationsTitle_amount}" required="true" requiredMessage="#{opBundle.EditOperationsRequiredMessage_amount}"/>
-                </h:panelGrid>
-                <h:commandLink action="#{operationsController.update}" value="#{opBundle.EditOperationsSaveLink}"/>
-                <br />
-                <br />
-                <h:link outcome="View" value="#{opBundle.EditOperationsViewLink}"/>
-                <br />
-                <h:commandLink action="#{operationsController.prepareList}" value="#{opBundle.EditOperationsShowAllLink}" immediate="true"/>
-                <br />
-                <br />
-                <h:link outcome="/index" value="#{opBundle.EditOperationsIndexLink}" />
+    <ui:composition>
+
+        <p:dialog id="OperationsEditDlg" widgetVar="OperationsEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{expBundle.EditOperationsTitle}">
+            <h:form id="OperationsEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{operationsController.selected != null}">
+                        <p:outputLabel value="#{expBundle.EditOperationsLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{operationsController.selected.id}" title="#{expBundle.EditOperationsTitle_id}" required="true" requiredMessage="#{expBundle.EditOperationsRequiredMessage_id}"/>
+                        <p:outputLabel value="#{expBundle.EditOperationsLabel_date}" for="date" />
+                        <p:calendar id="date" pattern="MM/dd/yyyy" value="#{operationsController.selected.date}" title="#{expBundle.EditOperationsTitle_date}" required="true" requiredMessage="#{expBundle.EditOperationsRequiredMessage_date}" showOn="button"/>
+                        <p:outputLabel value="#{expBundle.EditOperationsLabel_amount}" for="amount" />
+                        <p:inputText id="amount" value="#{operationsController.selected.amount}" title="#{expBundle.EditOperationsTitle_amount}" required="true" requiredMessage="#{expBundle.EditOperationsRequiredMessage_amount}"/>
+                        <p:outputLabel value="#{expBundle.EditOperationsLabel_userId}" for="userId" />
+                        <p:selectOneMenu id="userId" value="#{operationsController.selected.userId}" required="true" requiredMessage="#{expBundle.EditOperationsRequiredMessage_userId}">
+                            <f:selectItem itemLabel="#{expBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{usersController.itemsAvailableSelectOne}"
+                                           var="userIdItem"
+                                           itemValue="#{userIdItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{expBundle.EditOperationsLabel_categoryId}" for="categoryId" />
+                        <p:selectOneMenu id="categoryId" value="#{operationsController.selected.categoryId}" required="true" requiredMessage="#{expBundle.EditOperationsRequiredMessage_categoryId}">
+                            <f:selectItem itemLabel="#{expBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{categoriesController.itemsAvailableSelectOne}"
+                                           var="categoryIdItem"
+                                           itemValue="#{categoryIdItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{operationsController.update}" value="#{expBundle.Save}" update="display,:OperationsListForm:datalist,:growl" oncomplete="handleSubmit(args, 'OperationsEditDialog');"/>
+                    <p:commandButton value="#{expBundle.Cancel}" onclick="OperationsEditDialog.hide()"/>
+                </h:panelGroup>
             </h:form>
-        </ui:define>
-    </ui:composition>
+        </p:dialog>
 
+    </ui:composition>
 </html>

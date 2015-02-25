@@ -4,54 +4,17 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui">
     <h:head>
-        <title>Expenses Calculation System</title>
-        <h:outputStylesheet name="css/jsfcrud.css"/>
+        <title>Login to Expenses</title>
+        <h:outputStylesheet name="css/style.css"/>
     </h:head>
     <h:body>
-        <h:form>
-            <p:panelGrid styleClass="panelGrid">
-                <p:row>
-                    <p:column colspan="2" styleClass="column">
-                        <h2>Welcome to the Expenses Calculation System.<br/> Please enter your credentials.</h2>
-                    </p:column>
-                </p:row>
-                <p:row>
-                    <p:column styleClass="column">
-                        <b>Username:</b>
-                    </p:column>
-                    <p:column styleClass="column">
-                        <h:inputText id="username" value="#{loginBean.fuser}"/>
-                    </p:column>
-                </p:row>
-                <p:row>
-                    <p:column styleClass="column">
-                        <b>Password:</b>
-                    </p:column>
-                    <p:column styleClass="column">
-                        <h:inputSecret id="password" value="#{loginBean.fpass}"/>
-                    </p:column>
-                </p:row>
-                <p:row>
-                    <p:column colspan="2" styleClass="column">
-                        <h:commandButton value="Login" styleClass="Login"/>
-                    </p:column>
-                </p:row>
-            </p:panelGrid>   
-            
+        <h:form styleClass="login">      
+            <h1>Welcome to the Expenses Calculation System.<br/> Please enter your credentials.</h1>                            
+            <h:inputText id="username" required="required" styleClass="login-input" value="#{login.username}"/>                
+            <p:watermark for="username" value="Username"/>
+            <h:inputSecret id="userpass" required="required" styleClass="login-input" value="#{login.password}"/>
+                      <p:watermark for="userpass" value="Password"/>      
+            <h:commandButton value="Login" styleClass="login-submit" action="#{login.checkValidUser()}"/>                         
         </h:form>
-        <br />
-        <h:link outcome="welcomePrimefaces" value="Primefaces welcome page" />
-        <br />
-        <h:link outcome="/categories/List" value="Show All Categories Items"/>
-        <br />
-        <h:link outcome="/operations/List" value="Show All Operations Items"/>
-        <br />
-        <h:link outcome="/users/List" value="Show All Users Items"/>
-        <h:outputLabel value="#{loginBean.fuser}"/>
-        <br/>
-        <h:outputLabel value="#{loginBean.fpass}"/>
-        <br/>
-        <h:outputLabel value="#{verifyLogin.count}"/>
-    </h:body>    
+    </h:body>
 </html>
-

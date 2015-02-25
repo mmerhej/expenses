@@ -3,44 +3,35 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
 
-    <ui:composition template="/template.xhtml">
-        <ui:define name="title">
-            <h:outputText value="#{usrBundle.EditUsersTitle}"></h:outputText>
-        </ui:define>
-        <ui:define name="body">
-            <h:panelGroup id="messagePanel" layout="block">
-                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
-            </h:panelGroup>
-            <h:form>
-                <h:panelGrid columns="2">
-                    <h:outputLabel value="#{usrBundle.EditUsersLabel_id}" for="id" />
-                    <h:inputText id="id" value="#{usersController.selected.id}" title="#{usrBundle.EditUsersTitle_id}" required="true" requiredMessage="#{usrBundle.EditUsersRequiredMessage_id}"/>
-                    <h:outputLabel value="#{usrBundle.EditUsersLabel_fname}" for="fname" />
-                    <h:inputText id="fname" value="#{usersController.selected.fname}" title="#{usrBundle.EditUsersTitle_fname}" required="true" requiredMessage="#{usrBundle.EditUsersRequiredMessage_fname}"/>
-                    <h:outputLabel value="#{usrBundle.EditUsersLabel_lname}" for="lname" />
-                    <h:inputText id="lname" value="#{usersController.selected.lname}" title="#{usrBundle.EditUsersTitle_lname}" required="true" requiredMessage="#{usrBundle.EditUsersRequiredMessage_lname}"/>
-                    <h:outputLabel value="#{usrBundle.EditUsersLabel_email}" for="email" />
-                    <h:inputText id="email" value="#{usersController.selected.email}" title="#{usrBundle.EditUsersTitle_email}" required="true" requiredMessage="#{usrBundle.EditUsersRequiredMessage_email}"/>
-                    <h:outputLabel value="#{usrBundle.EditUsersLabel_username}" for="username" />
-                    <h:inputText id="username" value="#{usersController.selected.username}" title="#{usrBundle.EditUsersTitle_username}" required="true" requiredMessage="#{usrBundle.EditUsersRequiredMessage_username}"/>
-                    <h:outputLabel value="#{usrBundle.EditUsersLabel_password}" for="password" />
-                    <h:inputTextarea rows="4" cols="30" id="password" value="#{usersController.selected.password}" title="#{usrBundle.EditUsersTitle_password}" required="true" requiredMessage="#{usrBundle.EditUsersRequiredMessage_password}"/>
-                    <h:outputLabel value="#{usrBundle.EditUsersLabel_privileges}" for="privileges" />
-                    <h:inputText id="privileges" value="#{usersController.selected.privileges}" title="#{usrBundle.EditUsersTitle_privileges}" required="true" requiredMessage="#{usrBundle.EditUsersRequiredMessage_privileges}"/>
-                </h:panelGrid>
-                <h:commandLink action="#{usersController.update}" value="#{usrBundle.EditUsersSaveLink}"/>
-                <br />
-                <br />
-                <h:link outcome="View" value="#{usrBundle.EditUsersViewLink}"/>
-                <br />
-                <h:commandLink action="#{usersController.prepareList}" value="#{usrBundle.EditUsersShowAllLink}" immediate="true"/>
-                <br />
-                <br />
-                <h:link outcome="/index" value="#{usrBundle.EditUsersIndexLink}" />
+    <ui:composition>
+
+        <p:dialog id="UsersEditDlg" widgetVar="UsersEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{expBundle.EditUsersTitle}">
+            <h:form id="UsersEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{usersController.selected != null}">
+                        <p:outputLabel value="#{expBundle.EditUsersLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{usersController.selected.id}" title="#{expBundle.EditUsersTitle_id}" required="true" requiredMessage="#{expBundle.EditUsersRequiredMessage_id}"/>
+                        <p:outputLabel value="#{expBundle.EditUsersLabel_fname}" for="fname" />
+                        <p:inputText id="fname" value="#{usersController.selected.fname}" title="#{expBundle.EditUsersTitle_fname}" required="true" requiredMessage="#{expBundle.EditUsersRequiredMessage_fname}"/>
+                        <p:outputLabel value="#{expBundle.EditUsersLabel_lname}" for="lname" />
+                        <p:inputText id="lname" value="#{usersController.selected.lname}" title="#{expBundle.EditUsersTitle_lname}" required="true" requiredMessage="#{expBundle.EditUsersRequiredMessage_lname}"/>
+                        <p:outputLabel value="#{expBundle.EditUsersLabel_email}" for="email" />
+                        <p:inputText id="email" value="#{usersController.selected.email}" title="#{expBundle.EditUsersTitle_email}" required="true" requiredMessage="#{expBundle.EditUsersRequiredMessage_email}"/>
+                        <p:outputLabel value="#{expBundle.EditUsersLabel_username}" for="username" />
+                        <p:inputText id="username" value="#{usersController.selected.username}" title="#{expBundle.EditUsersTitle_username}" required="true" requiredMessage="#{expBundle.EditUsersRequiredMessage_username}"/>
+                        <p:outputLabel value="#{expBundle.EditUsersLabel_password}" for="password" />
+                        <p:inputTextarea rows="4" cols="30" id="password" value="#{usersController.selected.password}" title="#{expBundle.EditUsersTitle_password}" required="true" requiredMessage="#{expBundle.EditUsersRequiredMessage_password}"/>
+                        <p:outputLabel value="#{expBundle.EditUsersLabel_privileges}" for="privileges" />
+                        <p:inputText id="privileges" value="#{usersController.selected.privileges}" title="#{expBundle.EditUsersTitle_privileges}" required="true" requiredMessage="#{expBundle.EditUsersRequiredMessage_privileges}"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{usersController.update}" value="#{expBundle.Save}" update="display,:UsersListForm:datalist,:growl" oncomplete="handleSubmit(args, 'UsersEditDialog');"/>
+                    <p:commandButton value="#{expBundle.Cancel}" onclick="UsersEditDialog.hide()"/>
+                </h:panelGroup>
             </h:form>
-        </ui:define>
-    </ui:composition>
+        </p:dialog>
 
+    </ui:composition>
 </html>

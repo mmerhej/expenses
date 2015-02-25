@@ -5,16 +5,8 @@
               xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
     <application>
         <resource-bundle>
-            <base-name>/catBundle</base-name>
-            <var>catBundle</var>
-        </resource-bundle>
-        <resource-bundle>
-            <base-name>/opBundle</base-name>
-            <var>opBundle</var>
-        </resource-bundle>
-        <resource-bundle>
-            <base-name>/usrBundle</base-name>
-            <var>usrBundle</var>
+            <base-name>/expBundle</base-name>
+            <var>expBundle</var>
         </resource-bundle>
     </application>
 </faces-config>

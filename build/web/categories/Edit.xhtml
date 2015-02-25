@@ -3,34 +3,25 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
 
-    <ui:composition template="/template.xhtml">
-        <ui:define name="title">
-            <h:outputText value="#{catBundle.EditCategoriesTitle}"></h:outputText>
-        </ui:define>
-        <ui:define name="body">
-            <h:panelGroup id="messagePanel" layout="block">
-                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
-            </h:panelGroup>
-            <h:form>
-                <h:panelGrid columns="2">
-                    <h:outputLabel value="#{catBundle.EditCategoriesLabel_id}" for="id" />
-                    <h:inputText id="id" value="#{categoriesController.selected.id}" title="#{catBundle.EditCategoriesTitle_id}" required="true" requiredMessage="#{catBundle.EditCategoriesRequiredMessage_id}"/>
-                    <h:outputLabel value="#{catBundle.EditCategoriesLabel_categoryName}" for="categoryName" />
-                    <h:inputText id="categoryName" value="#{categoriesController.selected.categoryName}" title="#{catBundle.EditCategoriesTitle_categoryName}" required="true" requiredMessage="#{catBundle.EditCategoriesRequiredMessage_categoryName}"/>
-                </h:panelGrid>
-                <h:commandLink action="#{categoriesController.update}" value="#{catBundle.EditCategoriesSaveLink}"/>
-                <br />
-                <br />
-                <h:link outcome="View" value="#{catBundle.EditCategoriesViewLink}"/>
-                <br />
-                <h:commandLink action="#{categoriesController.prepareList}" value="#{catBundle.EditCategoriesShowAllLink}" immediate="true"/>
-                <br />
-                <br />
-                <h:link outcome="/index" value="#{catBundle.EditCategoriesIndexLink}" />
+    <ui:composition>
+
+        <p:dialog id="CategoriesEditDlg" widgetVar="CategoriesEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{expBundle.EditCategoriesTitle}">
+            <h:form id="CategoriesEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{categoriesController.selected != null}">
+                        <p:outputLabel value="#{expBundle.EditCategoriesLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{categoriesController.selected.id}" title="#{expBundle.EditCategoriesTitle_id}" required="true" requiredMessage="#{expBundle.EditCategoriesRequiredMessage_id}"/>
+                        <p:outputLabel value="#{expBundle.EditCategoriesLabel_categoryName}" for="categoryName" />
+                        <p:inputText id="categoryName" value="#{categoriesController.selected.categoryName}" title="#{expBundle.EditCategoriesTitle_categoryName}" required="true" requiredMessage="#{expBundle.EditCategoriesRequiredMessage_categoryName}"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{categoriesController.update}" value="#{expBundle.Save}" update="display,:CategoriesListForm:datalist,:growl" oncomplete="handleSubmit(args, 'CategoriesEditDialog');"/>
+                    <p:commandButton value="#{expBundle.Cancel}" onclick="CategoriesEditDialog.hide()"/>
+                </h:panelGroup>
             </h:form>
-        </ui:define>
-    </ui:composition>
+        </p:dialog>
 
+    </ui:composition>
 </html>

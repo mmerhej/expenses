@@ -3,33 +3,20 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:p="http://primefaces.org/ui">
 
-    <ui:composition template="/template.xhtml">
-        <ui:define name="title">
-            <h:outputText value="#{catBundle.CreateCategoriesTitle}"></h:outputText>
-        </ui:define>
-        <ui:define name="body">
-            <h:panelGroup id="messagePanel" layout="block">
-                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
-            </h:panelGroup>
-            <h:form>
-                <h:panelGrid columns="2">
-                    <h:outputLabel value="#{catBundle.CreateCategoriesLabel_id}" for="id" />
-                    <h:inputText id="id" value="#{categoriesController.selected.id}" title="#{catBundle.CreateCategoriesTitle_id}" required="true" requiredMessage="#{catBundle.CreateCategoriesRequiredMessage_id}"/>
-                    <h:outputLabel value="#{catBundle.CreateCategoriesLabel_categoryName}" for="categoryName" />
-                    <h:inputText id="categoryName" value="#{categoriesController.selected.categoryName}" title="#{catBundle.CreateCategoriesTitle_categoryName}" required="true" requiredMessage="#{catBundle.CreateCategoriesRequiredMessage_categoryName}"/>
-                </h:panelGrid>
-                <br />
-                <h:commandLink action="#{categoriesController.create}" value="#{catBundle.CreateCategoriesSaveLink}" />
-                <br />
-                <br />
-                <h:commandLink action="#{categoriesController.prepareList}" value="#{catBundle.CreateCategoriesShowAllLink}" immediate="true"/>
-                <br />
-                <br />
-                <h:link outcome="/index" value="#{catBundle.CreateCategoriesIndexLink}"/>
+    <ui:composition>
+        <p:dialog id="CategoriesCreateDlg" widgetVar="CategoriesCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{expBundle.CreateCategoriesTitle}">
+            <h:form id="CategoriesCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{categoriesController.selected != null}">
+                        <p:outputLabel value="#{expBundle.CreateCategoriesLabel_categoryName}" for="categoryName" />
+                        <p:inputText id="categoryName" value="#{categoriesController.selected.categoryName}" title="#{expBundle.CreateCategoriesTitle_categoryName}" required="true" requiredMessage="#{expBundle.CreateCategoriesRequiredMessage_categoryName}"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{categoriesController.create}" value="#{expBundle.Save}" update="display,:CategoriesListForm:datalist,:growl" oncomplete="handleSubmit(args,'CategoriesCreateDialog');"/>
+                    <p:commandButton value="#{expBundle.Cancel}" onclick="CategoriesCreateDialog.hide()"/>
+                </h:panelGroup>
             </h:form>
-        </ui:define>
+        </p:dialog>
     </ui:composition>
-
 </html>
