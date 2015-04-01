@@ -18,7 +18,7 @@
                         <p:inputText id="amount" value="#{operationsController.selected.amount}" title="#{expBundle.CreateOperationsTitle_amount}" required="true" requiredMessage="#{expBundle.CreateOperationsRequiredMessage_amount}"/>
                         <p:outputLabel value="User" for="userId" />
                         <p:selectOneMenu id="userId" value="#{operationsController.selected.userId}" required="true" requiredMessage="#{expBundle.EditOperationsRequiredMessage_userId}">
-                            <f:selectItems value="#{usersController.itemsAvailableSelectOne}"
+                            <f:selectItems value="#{usersController.itemsAvailableSelectUser}"
                                            var="userIdItem"
                                            itemValue="#{userIdItem}"/>
                         </p:selectOneMenu>

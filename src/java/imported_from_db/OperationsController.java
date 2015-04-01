@@ -76,11 +76,10 @@ public class OperationsController implements Serializable {
 
     public List<Operations> getItems1() {
         if (items == null) {         
-               
-                    items = getFacade().findAll();
-                                }
-       
-        return items;}
+            items = getFacade().findAll();
+            }
+        return items;
+    }
     
     public List<Operations> getItems() {
         if (items == null) {         
